@@ -1,0 +1,6 @@
+#This is going to be the object that draws the background of the combat
+
+import pygame
+
+class Background():
+  def __init__(self, name)
