@@ -72,7 +72,7 @@ class Character:
 
         message_display(str(self.name) + " attacks wildly!")
 
-        current_attack = self.damage + random.randint(0, 10)
+        current_attack = self.damage + random.randint(0, 20)
         if not target.dodge:
             target.health = target.health - current_attack
 
@@ -87,12 +87,13 @@ class Character:
 
     def heal_damage(self):
         # Has character heal wounds
-        message_display(str(self.name) + "bandages their wounds")
-        current_heal = 15 + random.randint(0, 10)
-        self.health = current_heal + self.health
-        if self.health > 200:
-            self.health = 200
-        message_display(str(self.name) + ' managed to heal for ' + str(current_heal) + 'hp')
+        if self.health != 0:
+            message_display(str(self.name) + "bandages their wounds")
+            current_heal = 15 + random.randint(0, 10)
+            self.health = current_heal + self.health
+            if self.health > 200:
+                self.health = 200
+            message_display(str(self.name) + ' managed to heal for ' + str(current_heal) + 'hp')
 
     def dodge_damage(self):
         # Has the character roll the dice to avoid damage entirely
@@ -142,9 +143,6 @@ level1 = Background('forest')
 
 def main():
 
-
-
-
     # This decides who goes first. Will likely be changed in the future to be more predictable.
     close = False
     turn = random.randint(0, 1)
@@ -159,7 +157,7 @@ def main():
         if playerturn:
             player_move = None
             message_display('It is your turn!', 1)
-            message_display('a to attack, b to heal, d to dodge, q to quit', 1.5)
+            message_display('a to attack, s to heal, d to dodge, q to quit', 1.5)
             for event in pygame.event.get():
                 # This is the event handler. It decides what happens when the user gives input.
                 if event == QUIT:
@@ -216,7 +214,7 @@ def main():
                 comp.heal_damage()
 
             playerturn = True
-        if comp.health <= 0:
+        if comp.health == 0:
             if level1.scene == 'forest':
                 level1.scene = 'hell'
                 message_display('You Won! On to level 2')
