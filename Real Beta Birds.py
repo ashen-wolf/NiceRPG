@@ -23,6 +23,7 @@ white = (255, 255, 255)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+
 pygame.init()
 
 
@@ -63,6 +64,7 @@ class Character:
         self.damage = damage
         self.name = name
         self.dodge = False
+        self.max_health = self.health
 
     def deal_damage(self, target):
 
@@ -210,15 +212,14 @@ def main():
 
             elif comp.health >= 175:
                 comp.deal_damage(player)
-            else:
-                comp.heal_damage()
 
             playerturn = True
         if comp.health == 0:
             if level1.scene == 'forest':
                 level1.scene = 'hell'
                 message_display('You Won! On to level 2')
-                comp.health = 200
+                comp.health = 250
+                comp.max_health = comp.health
                 player.health = 200
                 main()
             else:
@@ -228,6 +229,10 @@ def main():
         elif player.health <= 0:
             if level1.scene == 'forest':
                 message_display('You feel faint and fall into the trees below')
+                comp.health = 200
+                player.health = 200
+                playerturn = False
+                
 
 
 main()
